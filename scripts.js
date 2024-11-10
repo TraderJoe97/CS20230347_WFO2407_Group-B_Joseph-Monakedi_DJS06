@@ -45,3 +45,44 @@ const nameProvinceMap = names.reduce((map, name, index) => {
   return map;
 }, {});
 console.log(nameProvinceMap);
+
+//Advanced excercises
+console.log(
+  // product names
+  products.map(product => product.product),'\n',
+
+  // filtres out products with names longer than 5 characters
+  products.map(product => product.product).filter(product => product.length <= 5),'\n',
+
+  // filters out products without prices
+  // converts string prices to numbers
+  // calculates the total price using reduce
+  products.filter(product => product.price !== '').map(product => parseInt(product.price)).reduce((total, price) => total + price, 0),'\n',
+
+  // Concatenate product names into a single string
+  products.map(product => product.product).reduce((acc, product) => acc + product, ''),'\n',
+
+  // Identifies the highest and lowest-priced items, returning a string formatted as "Highest: X. Lowest: Y."
+  products.reduce((acc, product) => {
+    const price = parseInt(product.price);
+    if ( price > acc.highest) {
+      acc.highest = price  
+    }
+    if ( price < acc.lowest) {
+      acc.lowest = price
+    }
+    return acc;
+  },
+  {highest: 0, lowest: Infinity}),'\n',
+
+  // creates product object with keys 'name' and 'cost', maintaining their original values using object.entries and reduce
+  products.map(product => 
+  Object.entries(product).reduce((acc, [key, value]) => {
+    if (key === 'product') {
+      acc['name'] = value; // Rename 'product' to 'name'
+    } else if (key === 'price') {
+      acc['cost'] = value; // Rename 'price' to 'cost'
+    }
+    return acc;
+  }, {})),'\n',
+);
